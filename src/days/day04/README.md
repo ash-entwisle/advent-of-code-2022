@@ -48,71 +48,53 @@ Some of the pairs have noticed that one of their assignments fully contains the 
 
 In how many assignment pairs does one range fully contain the other?
 
+--- Part Two ---
+
+It seems like there is still quite a bit of duplicate work planned. Instead, the Elves would like to know the number of pairs that overlap at all.
+
+In the above example, the first two pairs (2-4,6-8 and 2-3,4-5) don't overlap, while the remaining four pairs (5-7,7-9, 2-8,3-7, 6-6,4-6, and 2-6,4-8) do overlap:
+
+    5-7,7-9 overlaps in a single section, 7.
+    2-8,3-7 overlaps all of the sections 3 through 7.
+    6-6,4-6 overlaps in a single section, 6.
+    2-6,4-8 overlaps in sections 4, 5, and 6.
+
+So, in this example, the number of overlapping assignment pairs is 4.
+
+In how many assignment pairs do the ranges overlap?
+
 
 ```
 
 ## Task 1
 
-Task 1 seems pretty simple. We have a list of strings and we need to see if there are any characters that appear in both halves of the string. If there are, we need to add the priority of that character to a total. All we need to do is split the string in half, loop through all the characters in the left half and see if they appear in the right half. If they do, we add the priority of that character to the total.
+// TODO
 
 ### Process
 
-1. loop through each line of the input file
-2. split the line in half
-3. loop through each character in the left half and see if it appears in the right half
-4. if it does, add the priority of that character to the total
+1. // TODO
 
 ### Psuedocode
 
 ```py
-for line in data:
-    left, right = line.split(line.length / 2)
-    for char in left:
-        if char in right:
-            total += priority(char)
-
-# priority(char) returns the priority of the character
+// TODO
 ```
 
 ### Code
 
-First we initialise total which will hold the total priority of all the characters that appear in both halves of the string. We then loop through each line of the input file. We split the line in half and then loop through each character in the left half. If the character appears in the right half, we add the priority of that character to the total. The `get_priority` function returns the priority of the character based on its ASCII value. If the character is lowercase, we subtract 96 from its ASCII value to get the priority. If the character is uppercase, we subtract 64 from its ASCII value to get the priority.
+// TODO
 
 ```rs
-pub fn run(data: &String) -> i32 {
-    // initialize total
-    let mut total: i32 = 0;
-    // loop through lines
-    for line in data.lines() {
-        // split line in half
-        let (left, right) = line.split_at(line.len() / 2);
-        // if there is a match, increase score by priority
-        for character in left.chars() {
-            if right.contains(character) {
-                total += get_priority(character);
-                break;
-            }
-        }
-    }
-    total
-}
-
-fn get_priority(item: char) -> i32 {
-    if item.is_uppercase() {
-        return item as i32 - 38;
-    } else {
-        return item as i32 - 96;
-    }
-}
+// TODO
 ```
 
 ## Part 2
 
-
+// TODO
 
 ### Process
 
-1. 
+1. // TODO
 
 ### Psuedocode
 
@@ -125,42 +107,5 @@ fn get_priority(item: char) -> i32 {
 // TODO
 
 ```rs
-use std::collections::HashSet;
-
-pub fn run(data: &String) -> i32 {
-    // init variables
-    let mut total: i32 = 0;
-    let mut sets: Vec<HashSet<char>> = vec![
-        HashSet::new(),
-        HashSet::new(),
-        HashSet::new(),
-    ];
-    // loop over the lines
-    for (index, line) in data.lines().enumerate() {
-        // set the coresponding set to a set of the current line
-        match index % 3 {
-            0 => { sets[index % 3] = line.chars().collect(); },
-            1 => { sets[index % 3] = line.chars().collect(); },
-            2 => { sets[index % 3] = line.chars().collect(); },
-            _ => {}
-        }
-        // if the index is 3, check the sets
-        if index % 3 == 2 {
-            for character in sets[0].intersection(&sets[1]).cloned() {
-                if sets[2] .contains(&character) {
-                    total += get_priority(character);
-                }
-            }
-        }
-    }
-    total
-}
-
-fn get_priority(item: char) -> i32 {
-    if item.is_uppercase() {
-        return item as i32 - 38;
-    } else {
-        return item as i32 - 96;
-    }
-}
+// TODO 
 ```
