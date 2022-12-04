@@ -13,12 +13,7 @@ pub fn run(data: &String) -> i32 {
     for (index, line) in data.lines().enumerate() {
 
         // set the coresponding set to a set of the current line
-        match index % 3 {
-            0 => { sets[index % 3] = line.chars().collect(); },
-            1 => { sets[index % 3] = line.chars().collect(); },
-            2 => { sets[index % 3] = line.chars().collect(); },
-            _ => {}
-        }
+        sets[index % 3] = line.chars().collect();
 
         // if the index is 3, check the sets
         if index % 3 == 2 {
