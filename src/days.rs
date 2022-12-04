@@ -3,8 +3,13 @@ mod day01;
 mod day02;
 mod day03;
 
-pub fn run(day: i32) {
-    let data = fs::read_to_string(format!("src/days/day{:02}/data/data.txt", day)).expect("Unable to read file");
+pub fn run(day: i32, test: bool) {
+    if !test {
+        let locale = format!("src/days/day{:02}/input.txt", day);
+    } else {
+        let locale = format!("src/days/day{:02}/test.txt", day);
+    }
+    let data = fs::read_to_string(locale).expect("Unable to read file");
     match day {
         1 => day01::run(data),
         2 => day02::run(data),
