@@ -1,23 +1,15 @@
 pub fn run(data: &String) -> i32 {
-    // init variables
-    let mut total: i32 = 0;
-    let mut op_choice: i32;
-    let mut my_choice: i32;
-
-    // loop over the lines
-    for line in data.lines() {
-        op_choice = get_choice(line.chars().next().unwrap());   
-        my_choice = get_choice(line.chars().last().unwrap());
-        match op_choice - my_choice {
-            -1 | 2 => total += 6,
-            0 => total += 3,
-            _ => total += 0,
+    let mut diff: i32 = 0;
+    data.lines().map(
+        |line| {
+            diff = get_choice(line.chars().next().unwrap()) - get_choice(line.chars().last().unwrap());
+            match diff {
+                -1 | 2 => 6,
+                0 => 3,
+                _ => 0,
+            }
         }
-        total += my_choice;
-    }
-
-    // done!
-    total
+    ).sum()
 }
 
 fn get_choice(character: char) -> i32 {
