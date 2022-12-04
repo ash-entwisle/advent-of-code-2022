@@ -25,3 +25,4 @@ fn get_choice(character: Option<char>) -> i32 {
         _ => return 0,
     }
 }
+
