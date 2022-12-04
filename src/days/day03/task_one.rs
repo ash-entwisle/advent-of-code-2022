@@ -1,31 +1,18 @@
 
-pub fn run(data: &String) -> i32 {
-    
-    // init variables
-    let mut total: i32 = 0;
-
-    // loop over the lines
-    for line in data.lines() {
-        
-        // slice the line in half
-        let (left, right) = line.split_at(line.len() / 2);
-
-        // if character in left and right, increase total by priority
-        for character in left.chars() {
-            if right.contains(character) {
-                total += get_priority(character);
-                break;
-            }
-        }
-    }
-
-    total
+pub fn run(data: &String) -> u32 {
+    data.lines()
+        .map(|line| line.split_at(line.len()/2))
+        .map(|(l, r)| l.chars()
+            .filter(|c| r.contains(*c))
+            .map(|c| get_priority(c))
+            .next().unwrap_or(0))
+        .sum::<u32>()
 }
 
-fn get_priority(item: char) -> i32 {
+fn get_priority(item: char) -> u32 {
     if item.is_uppercase() {
-        return item as i32 - 38;
+        return item as u32 - 38;
     } else {
-        return item as i32 - 96;
+        return item as u32 - 96;
     }
 }
