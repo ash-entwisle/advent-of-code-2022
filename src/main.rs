@@ -4,11 +4,13 @@ mod days;
 fn main() {
     let test: bool = false;
     let args: Vec<String> = env::args().collect();
-    let day: i32 = args[args.len() - 1].parse().unwrap();
-    // if day is imbertween 1 and 25, run the day
-    if day > 0 && day < 26 {
+    if args.len() > 1 {
+        let day: i32 = args[args.len() - 1].parse().unwrap();
         days::run(day, test);
     } else {
-        println!("Please enter a day between 1 and 25");
+        for day in 1..=25 {
+            println!("Running day {}:", day);
+            days::run(day, test);
+        }
     }
 }

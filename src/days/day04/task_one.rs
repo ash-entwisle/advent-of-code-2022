@@ -3,7 +3,6 @@ pub fn run(data: &String) -> i32 {
     data.lines()
         .map(|line: &str| line.split(|c| c == ',' || c == '-').collect())
         .map(|split: Vec<&str>| split.iter()
-            // map each string to an integer
             .map(|s| s.parse::<i32>().unwrap())
             .collect::<Vec<i32>>())
         .map(|v: Vec<i32>| (v[0], v[1], v[2], v[3]))
