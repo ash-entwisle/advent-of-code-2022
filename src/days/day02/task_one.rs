@@ -1,19 +1,13 @@
 pub fn run(data: &String) -> i32 {
-    let mut diff: i32 = 0;
-    data.lines().map(
-        |line| {
-            diff = get_choice(line.chars().next().unwrap()) - get_choice(line.chars().last().unwrap());
-            match diff {
-                -1 | 2 => 6,
-                0 => 3,
-                _ => 0,
-            }
-        }
-    ).sum()
+    data.lines()
+        .map(|line| (line.chars().next(), line.chars().last()))
+        .map(|(a, b)| (get_choice(a), get_choice(b)))
+        .map(|(a, b)| b + match a-b { -1 | 2 => 6, 0 => 3, _ => 0, })
+        .sum()
 }
 
-fn get_choice(character: char) -> i32 {
-    match character.to_uppercase().next().unwrap() {
+fn get_choice(character: Option<char>) -> i32 {
+    match character.unwrap() {
         'X'|'A' => return 1,
         'Y'|'B' => return 2,
         'Z'|'C' => return 3,
