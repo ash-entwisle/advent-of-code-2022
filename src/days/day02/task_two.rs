@@ -1,28 +1,21 @@
+
 pub fn run(data: &String) -> i32 {
-    // init variables
-    let mut total: i32 = 0;
-    let mut op_choice: i32;
-    let mut my_choice: i32;
-
-    // loop over the lines
-    for line in data.lines() {
-        op_choice = get_choice(line.chars().next().unwrap());    
-        my_choice = get_choice(line.chars().last().unwrap());
-        match my_choice {
-            0 => total += if op_choice - 1 == 0 { 3 } else { op_choice - 1 },
-            3 => total += op_choice,
-            6 => total += if op_choice + 1 == 4 { 1 } else { op_choice + 1 },
-            _ => total += 0,
-        }
-        total += my_choice;
-    }
-
-    // done!
-    total 
+    data.lines()
+        .map(|line| (
+            get_choice(line.chars().next()), 
+            get_choice(line.chars().last())
+        ))
+        .map(|(a, b)| b + match b { 
+            0 => if a-1 == 0 { 3 } else { a-1 },
+            3 => a,
+            6 => if a+1 == 4 { 1 } else { a+1 },
+            _ => 0, 
+         })
+        .sum()
 }
 
-fn get_choice(character: char) -> i32 {
-    match character.to_uppercase().next().unwrap() {
+fn get_choice(character: Option<char>) -> i32 {
+    match character.unwrap() {
         'A' => return 1,
         'B' => return 2,
         'C' => return 3,
