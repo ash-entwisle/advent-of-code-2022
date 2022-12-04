@@ -1,27 +1,20 @@
-use std::collections::HashSet;
 
 pub fn run(data: &String) -> i32 {
+    
     // init variables
     let mut total: i32 = 0;
 
     // loop over the lines
     for line in data.lines() {
         
-        // init hashset for line
-        let mut set: HashSet<char> = HashSet::new();
-        
-        // loop over the characters
-        for (index, character) in line.chars().enumerate() {
+        // slice the line in half
+        let (left, right) = line.split_at(line.len() / 2);
 
-            // if the character is not in the set, add it
-            if index < line.len() / 2 {
-                set.insert(character);
-            } else {
-                // if the character is in the set, increse total by the priority
-                if set.contains(&character) {
-                    total += get_priority(character);
-                    break;
-                }
+        // if character in left and right, increase total by priority
+        for character in left.chars() {
+            if right.contains(character) {
+                total += get_priority(character);
+                break;
             }
         }
     }

@@ -3,22 +3,27 @@ use std::collections::HashSet;
 pub fn run(data: &String) -> i32 {
     // init variables
     let mut total: i32 = 0;
-    let mut set1: HashSet<char> = HashSet::new();
-    let mut set2: HashSet<char> = HashSet::new();
-    let mut set3: HashSet<char> = HashSet::new();
+    let mut sets: Vec<HashSet<char>> = vec![
+        HashSet::new(),
+        HashSet::new(),
+        HashSet::new(),
+    ];
 
-
+    // loop over the lines
     for (index, line) in data.lines().enumerate() {
+
+        // set the coresponding set to a set of the current line
         match index % 3 {
-            0 => { set1 = line.chars().collect(); },
-            1 => { set2 = line.chars().collect(); },
-            2 => { set3 = line.chars().collect(); },
+            0 => { sets[index % 3] = line.chars().collect(); },
+            1 => { sets[index % 3] = line.chars().collect(); },
+            2 => { sets[index % 3] = line.chars().collect(); },
             _ => {}
         }
 
+        // if the index is 3, check the sets
         if index % 3 == 2 {
-            for character in set1.intersection(&set2).cloned() {
-                if set3.contains(&character) {
+            for character in sets[0].intersection(&sets[1]).cloned() {
+                if sets[2] .contains(&character) {
                     total += get_priority(character);
                 }
             }

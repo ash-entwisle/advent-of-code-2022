@@ -81,128 +81,96 @@ Find the item type that corresponds to the badges of each three-Elf group. What 
 ### Psuedocode
 
 ```py
-def main(data):
-    score = 0
-    for line in data:
-        # add points to the score based on what you play 
-        # add points to the score depending on the outcome of the round
-    return score
+# TODO
 ```
 
 ### Code
 
-First the code reads the input file and initalizes 3 variables. `total` will track the total score, `my_choice` will track what the player plays and `op_choice` will track what the opponent plays. The code then loops through each line of the file and gets the first and last character. It then uses the `get_choice` function to convert ABC/XYZ to 123. I then use a switch statement to determine who wins. If the player wins, they get 6 points, if they lose they get 0 points and if it's a draw they get 3 points. The score is then added to the total score (i will add a more detailed explination of this later, test.txt has some more notes on how I figured it out).
+// TODO
 
 ```rs
-use std::fs;
-
-fn main() {
-    // read the file
-    let data: String = fs::read_to_string("./data.txt").unwrap();
-
-    // init variables
+pub fn run(data: &String) -> i32 {
+    // initialize total
     let mut total: i32 = 0;
-    let mut op_choice: i32;
-    let mut my_choice: i32;
-
-    // loop over the lines
+    // loop through lines
     for line in data.lines() {
-        op_choice = get_choice(line.chars().next().unwrap());    
-        my_choice = get_choice(line.chars().last().unwrap());
-        match op_choice - my_choice {
-            -1 | 2 => total += 6,
-            0 => total += 3,
-            _ => total += 0,
+        // split line in half
+        let (left, right) = line.split_at(line.len() / 2);
+        // if there is a match, increase score by priority
+        for character in left.chars() {
+            if right.contains(character) {
+                total += get_priority(character);
+                break;
+            }
         }
-        total += my_choice;
     }
-
-    // done!
-    println!("Total: {}", total);
+    total
 }
 
-fn get_choice(character: char) -> i32 {
-    match character.to_uppercase().next().unwrap() {
-        'X'|'A' => return 1,
-        'Y'|'B' => return 2,
-        'Z'|'C' => return 3,
-        _ => return 0,
+fn get_priority(item: char) -> i32 {
+    if item.is_uppercase() {
+        return item as i32 - 38;
+    } else {
+        return item as i32 - 96;
     }
 }
-
-
 ```
 
 ## Part 2
 
-With part 2, we can use some of the same code as last time but edit it a bit. First we need to edit the `get_choice` function so it returns 0, 3 and 6 on X, Y and Z respectively. Then we need to edit the loop in the main function to check for wha the win condition is. 
+// TODO
 
 ### Process
 
-1. loop through each line of the input file
-2. convert first character to 1, 2 or 3
-3. convert last character to 0, 3 or 6
-4. if last character is 0, add first character -1 to total
-5. if last character is 3, add first character to total
-6. if last character is 6, add first character + 1 to total
-7. add score to total
+1. TODO
 
 ### Psuedocode
 
 ```py
-total = 0
-for line in data:
-    # convert first character to 1, 2 or 3
-    # convert last character to 0, 3 or 6
-    # if last character is 0, add first character -1 to total
-    # if last character is 3, add first character to total
-    # if last character is 6, add first character + 1 to total
-    # add score to total
-return total   
+# TODO
 ```
 
 ### Code
 
-This code is pretty much the same as part 1, except the function `get_choice` returns 0, 3 and 6 on X, Y and Z respectively. Then in the loop, I check if the last character is 0, 3 or 6 and add different values to the total score depending on what it is.  
+// TODO  
 
 ```rs
-use std::fs;
+use std::collections::HashSet;
 
-fn main() {
-    // read the file
-    let data: String = fs::read_to_string("./data.txt").unwrap();
-
+pub fn run(data: &String) -> i32 {
     // init variables
     let mut total: i32 = 0;
-    let mut op_choice: i32;
-    let mut my_choice: i32;
-
+    let mut sets: Vec<HashSet<char>> = vec![
+        HashSet::new(),
+        HashSet::new(),
+        HashSet::new(),
+    ];
     // loop over the lines
-    for line in data.lines() {
-        op_choice = get_choice(line.chars().next().unwrap());    
-        my_choice = get_choice(line.chars().last().unwrap());
-        match my_choice {
-            0 => total += if op_choice - 1 == 0 { 3 } else { op_choice - 1 },
-            3 => total += op_choice,
-            6 => total += if op_choice + 1 == 4 { 1 } else { op_choice + 1 },
-            _ => total += 0,
+    for (index, line) in data.lines().enumerate() {
+        // set the coresponding set to a set of the current line
+        match index % 3 {
+            0 => { sets[index % 3] = line.chars().collect(); },
+            1 => { sets[index % 3] = line.chars().collect(); },
+            2 => { sets[index % 3] = line.chars().collect(); },
+            _ => {}
         }
-        total += my_choice;
+        // if the index is 3, check the sets
+        if index % 3 == 2 {
+            for character in sets[0].intersection(&sets[1]).cloned() {
+                if sets[2] .contains(&character) {
+                    total += get_priority(character);
+                }
+            }
+        }
     }
-
-    // done!
-    println!("Total: {}", total);
+    total
 }
 
-fn get_choice(character: char) -> i32 {
-    match character.to_uppercase().next().unwrap() {
-        'A' => return 1,
-        'B' => return 2,
-        'C' => return 3,
-        'X' => return 0,
-        'Y' => return 3,
-        'Z' => return 6,
-        _ => return 0,
+fn get_priority(item: char) -> i32 {
+    if item.is_uppercase() {
+        return item as i32 - 38;
+    } else {
+        return item as i32 - 96;
     }
 }
 ```
