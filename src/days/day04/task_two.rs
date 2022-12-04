@@ -1,42 +1,40 @@
 use std::collections::HashSet;
 
+
 pub fn run(data: &String) -> i32 {
+    
     // init variables
     let mut total: i32 = 0;
-    let mut sets: Vec<HashSet<char>> = vec![
-        HashSet::new(),
-        HashSet::new(),
-        HashSet::new(),
-    ];
-
+    let mut elf1: HashSet<i32>;
+    let mut elf2: HashSet<i32>;
+    
     // loop over the lines
-    for (index, line) in data.lines().enumerate() {
+    for line in data.lines() {
+        // split line at comma or -
+        let split: Vec<&str> = line.split(|c| c == ',' || c == '-').collect();
 
-        // set the coresponding set to a set of the current line
-        match index % 3 {
-            0 => { sets[index % 3] = line.chars().collect(); },
-            1 => { sets[index % 3] = line.chars().collect(); },
-            2 => { sets[index % 3] = line.chars().collect(); },
-            _ => {}
-        }
-
-        // if the index is 3, check the sets
-        if index % 3 == 2 {
-            for character in sets[0].intersection(&sets[1]).cloned() {
-                if sets[2] .contains(&character) {
-                    total += get_priority(character);
-                }
-            }
+        // generate sets
+        elf1 = generate_set(
+            split[0].parse().unwrap(), 
+            split[1].parse().unwrap(),
+        );
+        elf2 = generate_set(
+            split[2].parse().unwrap(), 
+            split[3].parse().unwrap(),
+        );
+        
+        // check if there is an intersection
+        if elf1.intersection(&elf2).count() > 0 {
+            total += 1;
         }
     }
-
     total
 }
 
-fn get_priority(item: char) -> i32 {
-    if item.is_uppercase() {
-        return item as i32 - 38;
-    } else {
-        return item as i32 - 96;
-    }
+fn generate_set(start: i32, end: i32) -> HashSet<i32> {
+    let mut set: HashSet<i32> = HashSet::new();
+    for i in start..=end { set.insert(i); }
+    set
 }
+
+
