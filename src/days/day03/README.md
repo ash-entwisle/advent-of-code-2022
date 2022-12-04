@@ -70,23 +70,30 @@ Find the item type that corresponds to the badges of each three-Elf group. What 
 
 ## Task 1
 
-// TODO
+Task 1 seems pretty simple. We have a list of strings and we need to see if there are any characters that appear in both halves of the string. If there are, we need to add the priority of that character to a total. All we need to do is split the string in half, loop through all the characters in the left half and see if they appear in the right half. If they do, we add the priority of that character to the total.
 
 ### Process
 
 1. loop through each line of the input file
-2. split the line
-3. 
+2. split the line in half
+3. loop through each character in the left half and see if it appears in the right half
+4. if it does, add the priority of that character to the total
 
 ### Psuedocode
 
 ```py
-# TODO
+for line in data:
+    left, right = line.split(line.length / 2)
+    for char in left:
+        if char in right:
+            total += priority(char)
+
+# priority(char) returns the priority of the character
 ```
 
 ### Code
 
-// TODO
+First we initialise total which will hold the total priority of all the characters that appear in both halves of the string. We then loop through each line of the input file. We split the line in half and then loop through each character in the left half. If the character appears in the right half, we add the priority of that character to the total. The `get_priority` function returns the priority of the character based on its ASCII value. If the character is lowercase, we subtract 96 from its ASCII value to get the priority. If the character is uppercase, we subtract 64 from its ASCII value to get the priority.
 
 ```rs
 pub fn run(data: &String) -> i32 {
@@ -118,11 +125,11 @@ fn get_priority(item: char) -> i32 {
 
 ## Part 2
 
-// TODO
+
 
 ### Process
 
-1. TODO
+1. 
 
 ### Psuedocode
 
@@ -132,7 +139,7 @@ fn get_priority(item: char) -> i32 {
 
 ### Code
 
-// TODO  
+// TODO
 
 ```rs
 use std::collections::HashSet;

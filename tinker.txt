@@ -1,3 +1,0 @@
-main - take in option and send to days mod
-days - take in option and call relevant function and pass relevant data into said function
-dayxx - process data and return to days
