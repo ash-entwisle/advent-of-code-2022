@@ -1,22 +1,10 @@
 
-pub fn run(data: &String) -> i32 {
-    // init variables
-    let mut totals: Vec<i32> = Vec::new();
-    let mut num: i32 = 0;
-    
-    // loop over the lines
-    for line in data.lines() {
-        if !line.is_empty() {
-            num += line.parse::<i32>().unwrap();
-        } else {
-            totals.push(num);
-            num = 0;
-        }
-    }
-
-    // sort vector and sum 3 largest
-    totals.sort();
-    
-    // DONE!
-    totals[totals.len() - 3..].iter().sum()
+pub fn run(data: &String) -> u32 {  
+    let mut data = data.split("\r\n\r\n")               // split into groups                    
+        .map(|group| group.lines()                      // for each line in each group
+            .map(|line| line.parse::<u32>().unwrap())   // parse each line into a u32
+            .sum())                                     // sum the lines     
+        .collect::<Vec<u32>>();                         // collect into a vector
+    data.sort();                                        // sort the vector  (rust... why?)
+    data.into_iter().rev().take(3).sum::<u32>()         // return the sum of the 3 largest groups
 }

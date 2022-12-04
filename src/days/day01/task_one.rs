@@ -1,21 +1,8 @@
 
-pub fn run(data: &String) -> i32 {
-    // init variables
-    let mut max: i32 = 0;
-    let mut num: i32 = 0;
-    
-    // loop over the lines
-    for line in data.lines() {
-        if !line.is_empty() {
-            num += line.parse::<i32>().unwrap();
-        } else {
-            if num > max {
-                max = num;
-            }
-            num = 0;
-        }
-    }
-
-    // DONE!
-    max
-} 
+pub fn run(data: &String) -> u32 {    
+    data.split("\r\n\r\n")                              // split into groups
+        .map(|group| group.lines()                      // for each line in each group
+            .map(|line| line.parse::<u32>().unwrap())   // parse each line into a u32
+            .sum())                                     // sum the lines
+        .max().unwrap()                                 // get the max group                                                
+}
