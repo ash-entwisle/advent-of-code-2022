@@ -4,7 +4,7 @@ mod day02;
 mod day03;
 
 pub fn run(day: i32) {
-    let data = fs::read_to_string(format!("src/days/day{:02}/data.txt", day)).expect("Unable to read file");
+    let data = fs::read_to_string(format!("src/days/day{:02}/data/data.txt", day)).expect("Unable to read file");
     match day {
         1 => day01::run(data),
         2 => day02::run(data),
